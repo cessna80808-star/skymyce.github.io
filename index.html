@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="dark">
 <title>Sky-Myce — Hypixel SkyBlock, refined.</title>
-<meta name="description" content="Sky-Myce is a lightweight client-side Fabric mod for Hypixel SkyBlock: dungeon tools, run tracking, HUD widgets, Goldor coordination, and opt-in community leaderboards.">
-<meta name="theme-color" content="#f5f5f7">
+<meta name="description" content="Sky-Myce is a lightweight client-side Fabric mod for Hypixel SkyBlock: dungeon tools, run tracking, HUD widgets, Goldor coordination, player lookup, and opt-in community leaderboards.">
+<meta name="theme-color" content="#0a0a0c">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sky-Myce — Hypixel SkyBlock, refined.">
 <meta property="og:description" content="Dungeon tools, live run tracking, and community leaderboards in one quiet Fabric mod.">
@@ -22,7 +22,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<script defer src="app.js"></script>
+<script defer src="js/config.js"></script>
+<script defer src="js/core.js"></script>
+<script defer src="js/api.js"></script>
+<script defer src="js/demo.js"></script>
+<script defer src="js/motion.js"></script>
+<script defer src="js/app.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -35,6 +40,8 @@
     </a>
     <div class="nav-links" id="nav-links">
       <a href="#leaderboards">Leaderboards</a>
+      <a href="#players">Players</a>
+      <a href="guide.html">Guide</a>
       <a href="#features">Features</a>
       <a href="#install">Install</a>
       <a href="#faq">FAQ</a>
@@ -46,8 +53,11 @@
       </button>
     </div>
   </nav>
+  <span class="scroll-progress" id="scroll-progress" aria-hidden="true"></span>
   <div class="mobile-menu" id="mobile-menu" hidden>
     <a href="#leaderboards">Leaderboards</a>
+    <a href="#players">Players</a>
+    <a href="guide.html">Player guide</a>
     <a href="#features">Features</a>
     <a href="#install">Install</a>
     <a href="#faq">FAQ</a>
@@ -60,23 +70,24 @@
 
   <!-- ============================ Hero ============================ -->
   <section class="hero">
+    <div class="hero-halo" data-parallax="0.06" aria-hidden="true"></div>
     <div class="wrap hero-copy">
-      <p class="eyebrow" data-reveal>
+      <p class="eyebrow">
         <span class="eyebrow-dot"></span>
         Sky-Myce 2.5.15 — now with Goldor coordination
       </p>
-      <h1 data-reveal>SkyBlock,<br><span class="accent">refined.</span></h1>
-      <p class="lede" data-reveal>Dungeon tools, live run tracking, and community leaderboards — wrapped in one quiet, client-side Fabric mod.</p>
-      <div class="hero-actions" data-reveal>
+      <h1>SkyBlock,<br><span class="accent">refined.</span></h1>
+      <p class="lede">Dungeon tools, live run tracking, and community leaderboards — wrapped in one quiet, client-side Fabric mod.</p>
+      <div class="hero-actions">
         <a class="button button-dark" href="https://github.com/cessna80808-star/Sky-Myce/releases/latest">
           <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1v9m0 0L4.6 6.6M8 10l3.4-3.4M2 11.5V13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Download for Fabric
         </a>
-        <a class="link-arrow" href="#leaderboards">View leaderboards
+        <a class="link-arrow" href="guide.html">Read the player guide
           <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8h10m0 0L9.4 4.4M13 8l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
-      <ul class="hero-meta" data-reveal>
+      <ul class="hero-meta">
         <li>Fabric</li>
         <li>Minecraft 26.1.2</li>
         <li>Java 25</li>
@@ -85,9 +96,9 @@
     </div>
 
     <div class="wrap">
-      <div class="stage" data-reveal>
+      <div class="stage" data-reveal="scale">
         <div class="stage-halo" aria-hidden="true"></div>
-        <div class="app-window" aria-hidden="true">
+        <div class="app-window" data-tilt="5" aria-hidden="true">
           <div class="window-bar">
             <span class="window-dots"><i></i><i></i><i></i></span>
             <span class="window-title">Sky-Myce <em>2.5.15</em></span>
@@ -152,6 +163,57 @@
     </div>
   </section>
 
+  <!-- ========================= Command ticker ========================= -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" data-marquee>
+      <span class="ticker-item"><code>/sm</code> <span>everything, one menu</span></span>
+      <span class="ticker-item"><code>/sm leaderboard</code> <span>boards in game</span></span>
+      <span class="ticker-item"><code>/sm hud</code> <span>drag-and-drop widgets</span></span>
+      <span class="ticker-item"><code>/sm pf</code> <span>party finder matcher</span></span>
+      <span class="ticker-item"><code>/sm requeue</code> <span>straight back in</span></span>
+      <span class="ticker-item"><code>/sm tracker</code> <span>every run, remembered</span></span>
+      <span class="ticker-item"><code>/sm chat</code> <span>global chat</span></span>
+      <span class="ticker-item"><code>smt1:</code> <span>timed pre-leap calls</span></span>
+    </div>
+  </div>
+
+  <!-- ============================ Stats ============================ -->
+  <section class="stats-strip" id="stats-section">
+    <div class="wrap stats-grid" data-reveal-stagger>
+      <div class="stat" data-reveal>
+        <strong id="stat-players" data-count="0" data-count-format="compact">0</strong>
+        <span>players in the community</span>
+      </div>
+      <div class="stat" data-reveal>
+        <strong id="stat-records" data-count="0" data-count-format="compact">0</strong>
+        <span>shared records tracked</span>
+      </div>
+      <div class="stat" data-reveal>
+        <strong id="stat-metrics" data-count="0" data-count-format="number">0</strong>
+        <span>board metrics</span>
+      </div>
+      <div class="stat" data-reveal>
+        <strong id="stat-uptime" data-count="0" data-count-format="number">0</strong>
+        <span>days of relay uptime</span>
+      </div>
+    </div>
+    <p class="wrap board-note" id="stats-updated">Synced just now · updates hourly</p>
+  </section>
+
+  <!-- ========================= Announcements ========================= -->
+  <section class="section" id="news">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Latest</p>
+        <h2>From the relay.</h2>
+        <p class="section-lede">Release notes, board resets, and service notices — the same announcements the mod shows in game.</p>
+      </div>
+      <ul class="news-grid" id="announcements-list">
+        <li class="news-empty">Loading the latest…</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ========================= Leaderboards ========================= -->
   <section class="section section-alt" id="leaderboards">
     <div class="wrap">
@@ -161,7 +223,7 @@
         <p class="section-lede">Rankings built from opt-in community sharing across economy, dungeons, and RNG. See where your grind lands on the web — then pull up the same boards in game with <code>/sm leaderboard</code>.</p>
       </div>
 
-      <div class="board-card" data-reveal>
+      <div class="board-card" data-reveal="scale">
         <div class="board-top">
           <div class="board-categories" role="tablist" aria-label="Leaderboard category">
             <button class="cat is-active" role="tab" aria-selected="true" data-category="economy">Economy</button>
@@ -189,7 +251,7 @@
           <label class="search-field">
             <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.4 10.4L14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
             <span class="sr-only">Search players</span>
-            <input id="search-input" type="search" placeholder="Search players" autocomplete="off" spellcheck="false">
+            <input id="search-input" type="search" placeholder="Search players ( / )" autocomplete="off" spellcheck="false">
           </label>
         </div>
 
@@ -221,8 +283,31 @@
     </div>
   </section>
 
+  <!-- =========================== Players =========================== -->
+  <section class="section" id="players">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Player lookup</p>
+        <h2>Look anyone up.</h2>
+        <p class="section-lede">Search a sharer to see their board placement and the categories they publish. Only what a player opts in to share ever appears here.</p>
+      </div>
+
+      <div class="lookup-panel" data-reveal>
+        <form class="lookup-form" id="lookup-form" autocomplete="off">
+          <label class="lookup-field">
+            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.4 10.4L14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="sr-only">Player name</span>
+            <input id="lookup-input" type="text" placeholder="Username, e.g. Cessna808" spellcheck="false" maxlength="32">
+          </label>
+          <button class="button button-dark lookup-submit" type="submit">Look up</button>
+        </form>
+        <div class="lookup-result" id="lookup-result" hidden></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ========================== Features ========================== -->
-  <section class="section" id="features">
+  <section class="section section-alt" id="features">
     <div class="wrap">
       <div class="section-head" data-reveal>
         <p class="eyebrow">Everything included</p>
@@ -230,8 +315,8 @@
         <p class="section-lede">Six in-game areas, one quiet menu. Turn on what you want, leave the rest alone, and keep your frame rate.</p>
       </div>
 
-      <div class="bento">
-        <article class="card card-dark card-span-4" data-reveal>
+      <div class="bento" data-reveal-stagger>
+        <article class="card card-dark card-span-4" data-reveal data-spotlight>
           <p class="card-eyebrow">Dungeons</p>
           <h3>Handled, start to finish.</h3>
           <p>Party Finder matching, missing-player alerts, auto requeue, and a chest safeguard that stops a misclick before it costs you the drop.</p>
@@ -242,7 +327,7 @@
           </ul>
         </article>
 
-        <article class="card card-span-2" data-reveal>
+        <article class="card card-span-2" data-reveal data-spotlight>
           <p class="card-eyebrow">Tracker</p>
           <h3>Every run, remembered.</h3>
           <p>Runs, loot, chest profit, personal bests, and RNG history — with a widget that keeps the numbers in sight.</p>
@@ -251,7 +336,7 @@
           </div>
         </article>
 
-        <article class="card card-span-2" data-reveal>
+        <article class="card card-span-2" data-reveal data-spotlight>
           <p class="card-eyebrow">Goldor</p>
           <h3>Phase 3, together.</h3>
           <p>A terminal map with each class's job, step-by-step guidance, and timed pre-leaps shared as short <code>smt1:</code> calls.</p>
@@ -260,7 +345,7 @@
           </div>
         </article>
 
-        <article class="card card-span-2" data-reveal>
+        <article class="card card-span-2" data-reveal data-spotlight>
           <p class="card-eyebrow">HUD</p>
           <h3>Your HUD, your rules.</h3>
           <p>Widgets, status bars, skill XP, cooldowns, and themes. Arrange everything, then let Auto graphics protect your frames.</p>
@@ -269,7 +354,7 @@
           </div>
         </article>
 
-        <article class="card card-span-2" data-reveal>
+        <article class="card card-span-2" data-reveal data-spotlight>
           <p class="card-eyebrow">Community</p>
           <h3>Made for friends.</h3>
           <p>Dungeon friends, LFG support, relay-backed messages, Global Chat, and local cosmetics for the party.</p>
@@ -279,7 +364,7 @@
           </div>
         </article>
 
-        <article class="card card-span-6 card-split" data-reveal>
+        <article class="card card-span-6 card-split" data-reveal data-spotlight>
           <div>
             <p class="card-eyebrow">Quiet by design</p>
             <h3>Local first. Optional everything else.</h3>
@@ -297,11 +382,24 @@
           </div>
         </article>
       </div>
+
+      <a class="guide-teaser" href="guide.html" data-reveal>
+        <span class="guide-teaser-icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" width="26" height="26"><path d="M3 3h4.2c.9 0 1.6.7 1.6 1.6V13c0-.9-.7-1.6-1.6-1.6H3V3zM13 3H8.8c-.9 0-1.6.7-1.6 1.6V13c0-.9.7-1.6 1.6-1.6H13V3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </span>
+        <div>
+          <h3>The player guide</h3>
+          <p>Every feature, chapter by chapter — with screenshots and clips of each screen. New to the mod? Start at chapter one.</p>
+        </div>
+        <span class="link-arrow">Open the guide
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8h10m0 0L9.4 4.4M13 8l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
     </div>
   </section>
 
   <!-- =========================== Install =========================== -->
-  <section class="section section-alt" id="install">
+  <section class="section" id="install">
     <div class="wrap">
       <div class="section-head" data-reveal>
         <p class="eyebrow">Install</p>
@@ -310,22 +408,22 @@
       </div>
 
       <div class="install-grid">
-        <ol class="steps" data-reveal>
-          <li>
+        <ol class="steps" data-reveal-stagger>
+          <li data-reveal>
             <span class="step-num">1</span>
             <div>
               <h3>Install Fabric</h3>
               <p>Fabric for Minecraft <strong>26.1.2</strong> with <strong>Java 25</strong>.</p>
             </div>
           </li>
-          <li>
+          <li data-reveal>
             <span class="step-num">2</span>
             <div>
               <h3>Drop in the JAR</h3>
               <p>Put the standalone mod JAR in your Fabric instance's <code>mods</code> folder and keep the Fabric dependencies installed.</p>
             </div>
           </li>
-          <li>
+          <li data-reveal>
             <span class="step-num">3</span>
             <div>
               <h3>Launch and open <code>/sm</code></h3>
@@ -334,12 +432,12 @@
           </li>
         </ol>
 
-        <aside class="install-card" data-reveal>
+        <aside class="install-card" data-reveal="right">
           <img src="assets/icon.png" alt="Sky-Myce mod icon" width="72" height="72">
           <h3>Sky-Myce 2.5.15</h3>
           <p>Standalone Fabric mod · Hypixel SkyBlock</p>
           <a class="button button-dark button-full" href="https://github.com/cessna80808-star/Sky-Myce/releases/latest">Download latest release</a>
-          <a class="link-plain" href="https://github.com/cessna80808-star/Sky-Myce/blob/main/MANUAL.md">Read the player guide</a>
+          <a class="link-plain" href="guide.html">Read the player guide</a>
           <p class="fineprint">Migrating from the old Loader setup? Remove the old loader and JAR first. Keep your other mods and settings.</p>
         </aside>
       </div>
@@ -369,24 +467,28 @@
         <h2>Good questions.</h2>
       </div>
 
-      <div class="faq" data-reveal>
-        <details>
+      <div class="faq" data-reveal-stagger>
+        <details data-reveal>
           <summary>What do I need to run Sky-Myce?</summary>
           <p>Fabric for Minecraft 26.1.2, Java 25, and the standalone mod JAR from the latest release. Local features need nothing else.</p>
         </details>
-        <details>
+        <details data-reveal>
           <summary>Does it work without Discord?</summary>
           <p>Yes. Dungeon tools, tracking, HUD widgets, and quality-of-life features are local and offline-friendly. Discord only unlocks optional community features like Global Chat, shared rankings, and cosmetics sharing — and you can opt out per category.</p>
         </details>
-        <details>
+        <details data-reveal>
           <summary>Will it hurt my frame rate?</summary>
           <p>Sky-Myce measures its own impact. Graphics Auto lowers its menu effects while your frame rate is under target, then restores them when frames recover. HUD information, dungeon tracking, routing, and the Crush Camera are never reduced.</p>
         </details>
-        <details>
+        <details data-reveal>
           <summary>How do the leaderboards work?</summary>
           <p>Open <code>/sm leaderboard</code> in game. Boards cover economy, dungeons, and RNG across all-time, weekly, and monthly periods. Only opt-in players appear, sharing categories can be disabled independently, and anonymous names stay anonymous.</p>
         </details>
-        <details>
+        <details data-reveal>
+          <summary>Where can I see what a feature looks like before installing?</summary>
+          <p>The <a class="link-plain" href="guide.html">player guide</a> walks through every screen with screenshots and short clips, chapter by chapter.</p>
+        </details>
+        <details data-reveal>
           <summary>Is Sky-Myce affiliated with Hypixel?</summary>
           <p>No. Sky-Myce is an independent client-side mod and is not affiliated with Hypixel or Mojang.</p>
         </details>
@@ -407,12 +509,15 @@
     <nav class="footer-col" aria-label="Mod">
       <h3>Mod</h3>
       <a href="https://github.com/cessna80808-star/Sky-Myce/releases/latest">Download</a>
-      <a href="https://github.com/cessna80808-star/Sky-Myce/blob/main/MANUAL.md">Player guide</a>
+      <a href="guide.html">Player guide</a>
+      <a href="https://github.com/cessna80808-star/Sky-Myce/blob/main/MANUAL.md">Manual</a>
       <a href="https://github.com/cessna80808-star/Sky-Myce">Source code</a>
     </nav>
     <nav class="footer-col" aria-label="Site">
       <h3>Site</h3>
       <a href="#leaderboards">Leaderboards</a>
+      <a href="#players">Players</a>
+      <a href="guide.html">Guide</a>
       <a href="#features">Features</a>
       <a href="#install">Install</a>
       <a href="#faq">FAQ</a>
@@ -421,6 +526,7 @@
       <h3>Community</h3>
       <a href="https://discord.gg/9TBBCBNtSZ">Discord</a>
       <a href="https://github.com/cessna80808-star/Sky-Myce/issues">Report an issue</a>
+      <a href="admin.html">Admin panel</a>
     </nav>
   </div>
   <div class="wrap footer-legal">

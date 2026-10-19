@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Player guide — Sky-Myce</title>
+<meta name="description" content="The Sky-Myce player guide: install, dungeons, Goldor phase 3, HUD layouts, community boards — every screen with screenshots and clips.">
+<meta name="theme-color" content="#0a0a0c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sky-Myce — player guide">
+<meta property="og:description" content="Everything Sky-Myce does, chapter by chapter, with screenshots and clips of each screen.">
+<meta property="og:image" content="assets/og.png">
+<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="guide.css">
+<script>document.documentElement.classList.add('js');</script>
+<script defer src="js/config.js"></script>
+<script defer src="js/core.js"></script>
+<script defer src="js/motion.js"></script>
+<script defer src="js/guide-content.js"></script>
+<script defer src="js/guide.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="site-header">
+  <nav class="nav wrap" aria-label="Primary">
+    <a class="brand" href="index.html" aria-label="Sky-Myce home">
+      <img src="assets/icon.png" alt="" width="30" height="30">
+      <span>Sky-Myce</span>
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#leaderboards">Leaderboards</a>
+      <a href="index.html#players">Players</a>
+      <a href="index.html#install">Install</a>
+      <a href="index.html#faq">FAQ</a>
+    </div>
+    <div class="nav-actions">
+      <a class="button button-dark button-small" href="https://github.com/cessna80808-star/Sky-Myce/releases/latest">Download</a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <span class="scroll-progress" id="scroll-progress" aria-hidden="true"></span>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <a href="index.html">Home</a>
+    <a href="index.html#leaderboards">Leaderboards</a>
+    <a href="index.html#players">Players</a>
+    <a href="index.html#install">Install</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="https://github.com/cessna80808-star/Sky-Myce/releases/latest">Download for Fabric</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="guide-hero">
+    <div class="hero-halo" data-parallax="0.06" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>
+        <span class="eyebrow-dot"></span>
+        Player guide
+      </p>
+      <h1 data-reveal="scale">Every screen.<br><span class="accent">Explained.</span></h1>
+      <p class="guide-intro" id="guide-intro" data-reveal></p>
+
+      <div class="guide-hero-meta" data-reveal>
+        <span class="guide-badge" id="guide-version">v2.5.15</span>
+        <span class="guide-badge-guide" id="guide-updated">Updated October 2026</span>
+      </div>
+
+      <div class="guide-progress-wrap" data-reveal>
+        <div class="guide-progress">
+          <div class="guide-progress-fill" id="guide-progress-fill"></div>
+        </div>
+        <span class="guide-progress-label" id="guide-progress-label">0 steps done</span>
+      </div>
+
+      <label class="guide-search" data-reveal>
+        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.4 10.4L14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span class="sr-only">Search the guide</span>
+        <input id="guide-search" type="search" placeholder="Search the guide — “goldor”, “chest”, “requeue”…" autocomplete="off" spellcheck="false">
+      </label>
+    </div>
+  </section>
+
+  <div class="wrap guide-layout">
+    <aside class="guide-aside">
+      <nav class="guide-toc" id="guide-toc" aria-label="Guide contents"></nav>
+    </aside>
+
+    <div class="guide-main">
+      <div id="guide-chapters"></div>
+      <p class="guide-empty" id="guide-empty" hidden>
+        <strong>No steps match that search.</strong>
+        Try a shorter word, or clear the search box.
+      </p>
+    </div>
+  </div>
+</main>
+
+<div class="guide-lightbox" id="guide-lightbox" hidden>
+  <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image">×</button>
+  <figure>
+    <img id="guide-lightbox-img" alt="">
+    <figcaption id="guide-lightbox-caption"></figcaption>
+  </figure>
+</div>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="index.html">
+        <img src="assets/icon.png" alt="" width="26" height="26">
+        <span>Sky-Myce</span>
+      </a>
+      <p>Guide media lives in <code>assets/guide/</code> — see the contributing chapter for capture standards.</p>
+    </div>
+    <nav class="footer-col" aria-label="Mod">
+      <h3>Mod</h3>
+      <a href="https://github.com/cessna80808-star/Sky-Myce/releases/latest">Download</a>
+      <a href="index.html#install">Install steps</a>
+      <a href="https://github.com/cessna80808-star/Sky-Myce/blob/main/MANUAL.md">Manual</a>
+    </nav>
+    <nav class="footer-col" aria-label="Site">
+      <h3>Site</h3>
+      <a href="index.html#leaderboards">Leaderboards</a>
+      <a href="index.html#players">Players</a>
+      <a href="index.html#features">Features</a>
+    </nav>
+    <nav class="footer-col" aria-label="Community">
+      <h3>Community</h3>
+      <a href="https://discord.gg/9TBBCBNtSZ">Discord</a>
+      <a href="https://github.com/cessna80808-star/Sky-Myce/issues">Report an issue</a>
+    </nav>
+  </div>
+  <div class="wrap footer-legal">
+    <p>© 2026 Sky-Myce. Not affiliated with Hypixel or Mojang. Minecraft is a trademark of Mojang Synergies AB.</p>
+  </div>
+</footer>
+</body>
+</html>
